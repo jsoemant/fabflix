@@ -31,11 +31,14 @@ public class SingleMovieServlet extends HttpServlet {
         try {
             Connection dbcon = dataSource.getConnection();
 //            Statement statement = dbcon.createStatement();
-            String query = "SELECT \n" +
-                    "    M.id, \n" +
-                    "    M.title,\n" +
-                    "    M.year,\n" +
-                    "    M.director,\n" +
+            String query = "WITH MR AS (SELECT *\n" +
+                    "\t\t\tFROM movies M LEFT OUTER JOIN ratings R on M.id = R.movieId)\n" +
+                    "\n" +
+                    "SELECT \n" +
+                    "\tMR.id,\n" +
+                    "    MR.title,\n" +
+                    "    MR.year,\n" +
+                    "    MR.director,\n" +
                     "    (SELECT \n" +
                     "            GROUP_CONCAT(sub_query.name)\n" +
                     "        FROM\n" +
@@ -44,7 +47,7 @@ public class SingleMovieServlet extends HttpServlet {
                     "            FROM\n" +
                     "                genres G, genres_in_movies GM, movies TM\n" +
                     "            WHERE\n" +
-                    "                TM.id = M.id AND M.id = GM.movieId\n" +
+                    "                TM.id = MR.id AND MR.id = GM.movieId\n" +
                     "                    AND GM.genreId = G.id) AS sub_query) AS genres,\n" +
                     "    (SELECT \n" +
                     "            GROUP_CONCAT(sub_query.name)\n" +
@@ -54,9 +57,9 @@ public class SingleMovieServlet extends HttpServlet {
                     "            FROM\n" +
                     "                stars S, stars_in_movies SM, movies TM\n" +
                     "            WHERE\n" +
-                    "                TM.id = M.id AND M.id = SM.movieId\n" +
+                    "                TM.id = MR.id AND MR.id = SM.movieId\n" +
                     "                    AND SM.starId = s.id) AS sub_query) AS stars,\n" +
-                    "    (SELECT \n" +
+                    "\t(SELECT \n" +
                     "            GROUP_CONCAT(sub_query.id)\n" +
                     "        FROM\n" +
                     "            (SELECT \n" +
@@ -64,14 +67,14 @@ public class SingleMovieServlet extends HttpServlet {
                     "            FROM\n" +
                     "                stars S, stars_in_movies SM, movies TM\n" +
                     "            WHERE\n" +
-                    "                TM.id = M.id AND M.id = SM.movieId\n" +
-                    "                    AND SM.starId = s.id\n) AS sub_query) AS stars_id,\n" +
-                    "    R.rating\n" +
+                    "                TM.id = MR.id AND MR.id = SM.movieId\n" +
+                    "                    AND SM.starId = s.id) AS sub_query) AS stars_id,\n" +
+                    "\tIFNULL(MR.rating, 'N/A') as rating\n" +
                     "FROM\n" +
-                    "    ratings R,\n" +
-                    "    movies M\n" +
+                    "\tMR\n" +
                     "WHERE\n" +
-                    "    R.movieId = M.id AND M.id = " + "?" ;
+                    "    MR.id = " + "?";
+
 
             PreparedStatement statement = dbcon.prepareStatement(query);
 
