@@ -58,7 +58,7 @@ public class SingleMovieServlet extends HttpServlet {
                     "                stars S, stars_in_movies SM, movies TM\n" +
                     "            WHERE\n" +
                     "                TM.id = MR.id AND MR.id = SM.movieId\n" +
-                    "                    AND SM.starId = s.id) AS sub_query) AS stars,\n" +
+                    "                    AND SM.starId = S.id) AS sub_query) AS stars,\n" +
                     "\t(SELECT \n" +
                     "            GROUP_CONCAT(sub_query.id)\n" +
                     "        FROM\n" +
@@ -68,7 +68,7 @@ public class SingleMovieServlet extends HttpServlet {
                     "                stars S, stars_in_movies SM, movies TM\n" +
                     "            WHERE\n" +
                     "                TM.id = MR.id AND MR.id = SM.movieId\n" +
-                    "                    AND SM.starId = s.id) AS sub_query) AS stars_id,\n" +
+                    "                    AND SM.starId = S.id) AS sub_query) AS stars_id,\n" +
                     "\tIFNULL(MR.rating, 'N/A') as rating\n" +
                     "FROM\n" +
                     "\tMR\n" +
