@@ -16,7 +16,7 @@ function getParameterByName(target) {
 
 function handleSingleStar(resultData) {
     let singleStarInfoElement = jQuery("#single_star_info");
-    singleStarInfoElement.append("<p>" + resultData[0]["name"] + "</p>");
+    singleStarInfoElement.append(resultData[0]["name"]);
 
     let singleStarTable = jQuery("#single_star_table_body");
     let rowHTML = "";

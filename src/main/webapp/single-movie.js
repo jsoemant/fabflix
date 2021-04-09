@@ -16,7 +16,7 @@ function getParameterByName(target) {
 
 function handleSingleMovie(resultData) {
     let singleMovieInfoElement = jQuery("#single_movie_info");
-    singleMovieInfoElement.append("<p>" + resultData[0]["title"] + "</p>");
+    singleMovieInfoElement.append(resultData[0]["title"]);
 
     let singleMovieTable = jQuery("#single_movie_table_body");
     let rowHTML = "";
