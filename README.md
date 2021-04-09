@@ -16,4 +16,4 @@ DEMO: https://youtu.be/Uilzos-Oh1w
     mysql> quit;
     ```
 
-#### prepare the database `moviedbexample`
+Josh: Set up the single movie/star servlets, set up single movie/star html and js files, edited queries, added front-end styling on style.css.
