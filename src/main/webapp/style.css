@@ -1,20 +1,8 @@
 body {
-    font-family: 'Comic Sans MS';
+    font-family: Helvetica;
     background-image: url("theater.png");
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
 }
 
 h1{
@@ -29,10 +17,6 @@ h3{
 table {
     border-collapse: collapse;
     margin: auto;
-    border-radius: 5px 5px 0 0;
-    overflow: hidden;
-    /*Adds cool shadows*/
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 caption {
@@ -40,8 +24,9 @@ caption {
     color: #fff;
     font-size: x-large;
     font-weight: bold;
-    letter-spacing: .3em;
     padding: 10px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
 }
 
 th {
@@ -76,6 +61,14 @@ th {
     padding: 12px 15px;
 }
 
-a.index {
+a{
+    color: black;
+}
+
+a:hover{
+    color: lightseagreen;
+}
+
+a.index{
     text-align: center;
 }
