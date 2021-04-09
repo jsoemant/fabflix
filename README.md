@@ -17,3 +17,4 @@ DEMO: https://youtu.be/Uilzos-Oh1w
     ```
 
 Josh: Set up the single movie/star servlets, set up single movie/star html and js files, edited queries, added front-end styling on style.css.
+Kevin: Set up movie list servlet, set up index html and js files, created sql queries, set up files, added front-end styling on style.css.
