@@ -1,6 +1,6 @@
 ## CS 122B Project 1
 
-### Before running the example
+DEMO: https://youtu.be/Uilzos-Oh1w
 
 #### If you do not have USER `mytestuser` setup in MySQL, follow the below steps to create it:
 
