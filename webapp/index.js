@@ -6,7 +6,7 @@ function handleMovieListPage(resultData) {
         rowHTML += "<tr>";
         rowHTML +=
             "<td>" +
-            "<a href=\"single-movie.html?id=" + resultData[i]['id'] + "\">" +
+            "<a href=" + resultData[i]['id'] + "\"single-movie.html?id=\">" +
             resultData[i]["title"] + "</a>" +
             "</td>";
         rowHTML += "<td>" + resultData[i]["year"] + "</td>";
@@ -17,7 +17,7 @@ function handleMovieListPage(resultData) {
         for (let j = 0; j < resultData[i]["stars"].length; j++) {
             rowHTML +=
                 sep +
-                "<a href=\"single-star.html?id=" + resultData[i]["stars_id"][j] + "\">" +
+                "<a href=" + resultData[i]["stars_id"][j] + "\"single-star.html?id=\">" +
                 resultData[i]["stars"][j] + "</a>";
             sep = ", ";
         }

@@ -27,7 +27,7 @@ function handleSingleStar(resultData) {
     for (let j = 0; j < resultData[0]["movies"].length; j++) {
         rowHTML +=
             sep +
-            "<a href=\"single-movie.html?id=" + resultData[0]["moviesId"][j] + "\">" +
+            "<a href=" + resultData[0]["moviesId"][j] + "\"single-movie.html?id=\">" +
             resultData[0]["movies"][j] + "</a>";
         sep = ", ";
     }
