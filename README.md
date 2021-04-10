@@ -17,7 +17,8 @@ https://youtu.be/Uilzos-Oh1w
  -  Link to the AWS instance: http://52.15.129.141:8080/manager
     ```
     Credentials:
-    tomcat:pass
+    User: tomcat
+    Password: pass
     ```
  -  The webapp is now deployed!
 
