@@ -18,7 +18,6 @@ import java.sql.ResultSet;
 // Declaring a WebServlet called SingleStarServlet, which maps to url "/api/single-star"
 @WebServlet(name = "SingleStarServlet", urlPatterns = "/api/single-star")
 public class SingleStarServlet extends HttpServlet {
-    private static final long serialVersionUID = 2L;
 
     // Create a dataSource which registered in web.xml
     private DataSource dataSource;
@@ -40,90 +39,65 @@ public class SingleStarServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         // Retrieve parameter id from url request.
-        String requestId = request.getParameter("id");
+        String id = request.getParameter("id");
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            // Get a connection from dataSource
 
-            // Construct a query with parameter represented by "?"
-            String query = "SELECT \n" +
-                    "    S.id,\n" +
-                    "    S.name,\n" +
-                    "    IFNULL(S.birthYear, 'N/A') as birthYear,\n" +
-                    "    (SELECT \n" +
-                    "            GROUP_CONCAT(sub_query.id)\n" +
-                    "        FROM\n" +
-                    "            (SELECT \n" +
-                    "                M.id\n" +
-                    "            FROM\n" +
-                    "                stars_in_movies SM, movies M\n" +
-                    "            WHERE\n" +
-                    "                S.id = SM.starId AND SM.movieId = M.id) AS sub_query) AS movies_id,\n" +
-                    "    (SELECT \n" +
-                    "            GROUP_CONCAT(sub_query.title)\n" +
-                    "        FROM\n" +
-                    "            (SELECT \n" +
-                    "                M.title\n" +
-                    "            FROM\n" +
-                    "                stars_in_movies SM, movies M\n" +
-                    "            WHERE\n" +
-                    "                S.id = SM.starId AND SM.movieId = M.id) AS sub_query) AS movies\n" +
-                    "FROM\n" +
-                    "    stars S\n" +
-                    "WHERE\n" +
-                    "    S.id = " + "?" ;
+            //Preparing and executing star Query
+            String starQuery = "SELECT S.id, S.name, IFNULL(S.birthYear, 'N/A') as birthYear\n" +
+                    "FROM stars S\n" +
+                    "WHERE S.id = ?";
+            PreparedStatement starStatement = conn.prepareStatement(starQuery);
+            starStatement.setString(1, id);
+            ResultSet starResults = starStatement.executeQuery();
 
-            // Declare our statement
-            PreparedStatement statement = conn.prepareStatement(query);
+            //Prepare and execute movieQuery
+            String movieQuery = "SELECT M.id, M.title\n" +
+                    "FROM stars_in_movies SiM, movies M\n" +
+                    "WHERE SiM.starId = ? AND SiM.movieId = M.id\n" +
+                    "ORDER BY M.year DESC, M.title ASC";
 
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
-            statement.setString(1, requestId);
+            PreparedStatement movieStatement = conn.prepareStatement(movieQuery);
+            movieStatement.setString(1, id);
+            ResultSet movieResults = movieStatement.executeQuery();
 
-            // Perform the query
-            ResultSet rs = statement.executeQuery();
-
+            //Creating array for return
             JsonArray jsonArray = new JsonArray();
 
-            // Iterate through each row of rs
-            while (rs.next()) {
-
-                String id = rs.getString("id");
-                String name = rs.getString("name");
-                String birthYear = rs.getString("birthYear");
-
-                JsonArray moviesArray = new JsonArray();
-                String[] movies = rs.getString("movies").split(",");
-                for (String movie: movies) {
-                    moviesArray.add(movie);
-                }
-
-                JsonArray moviesIdArray = new JsonArray();
-                String[] moviesId = rs.getString("movies_id").split(",");
-                for (String Id: moviesId) {
-                    moviesIdArray.add(Id);
-                }
-
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("id", id);
+            // Parse and handle star Data
+            JsonObject jsonObject = new JsonObject();
+            while (starResults.next()) {
+                String name = starResults.getString("name");
+                String starId = starResults.getString("id");
+                String birthYear = starResults.getString("birthYear");
                 jsonObject.addProperty("name", name);
+                jsonObject.addProperty("starId", starId);
                 jsonObject.addProperty("birthYear", birthYear);
-                jsonObject.add("movies", moviesArray);
-                jsonObject.add("moviesId", moviesIdArray);
-
                 jsonArray.add(jsonObject);
             }
-            rs.close();
-            statement.close();
+            starResults.close();
+            starStatement.close();
+
+            // Parse and handle movie data
+            JsonArray movieArray = new JsonArray();
+            while (movieResults.next()) {
+                JsonObject tmp = new JsonObject();
+                String movieId = movieResults.getString("id");
+                String movieTitle = movieResults.getString("title");
+                tmp.addProperty("id", movieId);
+                tmp.addProperty("title", movieTitle);
+                movieArray.add(tmp);
+            }
+            jsonObject.add("movies", movieArray);
+            movieResults.close();
+            movieStatement.close();
 
             // write JSON string to output
             out.write(jsonArray.toString());
-            // set response status to 200 (OK)
-            response.setStatus(200);
 
         } catch (Exception e) {
             // write error message JSON object to output

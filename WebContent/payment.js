@@ -5,23 +5,10 @@ function handleFailure(res) {
     $("#payment_message").text(res["responseJSON"]["message"]);
 }
 
-
 function handlePaymentResult(res) {
 
-
     if (res["status"] === "success") {
-        $.ajax("api/index", {
-            method: "GET",
-            success: () => {
-                $.ajax({
-                    url: "api/index",
-                    method: "DELETE",
-                    success: () => {
-                        window.location.replace("confirm.html");
-                    }
-                });
-            }
-        })
+        window.location.replace("confirm.html");
     } else {
         $("#payment_message").text(res["message"]);
     }
@@ -41,9 +28,6 @@ function submitPaymentInformation(event) {
         }
     );
 }
-
-
-
 
 
 function handleResultData(resultData){

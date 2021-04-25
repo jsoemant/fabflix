@@ -14,26 +14,93 @@ function getParameterByName(target) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+function handleClick(event) {
+    console.log(event);
+
+    let PARAMETERS = {
+        "addId": event["target"]["id"],
+        "addQty": 1,
+        "addPrice": 10,
+        "addTitle": event["target"]["name"]
+    }
+
+    $.ajax(
+        "api/index", {
+            method: "POST",
+            data: $.param(PARAMETERS)
+        }
+    );
+}
+function handleGenreChange(id) {
+    const PARAMETERS = [
+        {'name': 'title', "value": ""},
+        {'name':'year', "value": ""},
+        {'name':'genre', "value": id},
+        {'name':'director', "value": ""},
+        {'name':'star', "value": ""},
+        {'name':'offset', "value": "0"},
+        {'name':'limit', "value": "10"},
+        {'name':'order', "value": "TITLEASCRATINGASC"}
+    ];
+
+
+    $.ajax(
+        "api/index", {
+            method: "POST",
+            data: $.param(PARAMETERS),
+            success: () => {
+                window.location.replace("movie-list.html");
+            }
+        }
+    );
+}
+
+
 function handleSingleMovie(resultData) {
-    let singleMovieInfoElement = jQuery("#single_movie_info");
-    singleMovieInfoElement.append(resultData[0]["title"]);
+    let movies = resultData[0];
 
     let singleMovieTable = jQuery("#single_movie_table_body");
     let rowHTML = "";
     rowHTML += "<tr>";
-    rowHTML += "<td>" + resultData[0]["year"] + "</td>";
-    rowHTML += "<td>" + resultData[0]["director"] + "</td>";
-    rowHTML += "<td>" + resultData[0]["genres"] + "</td>";
+    rowHTML += "<td>" + movies["title"] + "</td>";
+    rowHTML += "<td>" + movies["year"] + "</td>";
+    rowHTML += "<td>" + movies["director"] + "</td>";
+
     rowHTML += "<td>";
     let sep = "";
-    for (let j = 0; j < resultData[0]["stars"].length; j++) {
+    for (let j = 0; j < movies["genres"].length; j++) {
         rowHTML +=
-            sep + "<a href=\"single-star.html?id=" + resultData[0]["stars_id"][j] + "\">" +
-            resultData[0]["stars"][j] + "</a>";
+            sep + "<a " +
+            "id=" + movies["genres"][j]["id"] +
+            " href=\"#\" " +
+            "onClick=handleGenreChange(this.id)" +
+            "\>" +
+            movies["genres"][j]["name"] + "</a>";
         sep = ", ";
     }
     rowHTML += "</td>";
-    rowHTML += "<td>" + resultData[0]["rating"] + "</td>";
+
+
+    rowHTML += "<td>";
+    sep = "";
+    for (let j = 0; j < movies["stars"].length; j++) {
+        rowHTML +=
+            sep + "<a href=\"single-star.html?id=" + movies["stars"][j]["id"] + "\">" +
+            movies["stars"][j]["name"] + "</a>";
+        sep = ", ";
+    }
+    rowHTML += "</td>";
+
+    rowHTML += "<td>" + (movies["rating"] ? movies["rating"] : "N/A") + "</td>";
+
+    rowHTML += "<td>" +
+        "<button id=" +
+        movies["id"] +
+        " name=\"" +
+        movies["title"] +
+        "\" onClick=handleClick(event)>+</button>" +
+        "</td>";
+
     rowHTML += "</tr>";
     singleMovieTable.append(rowHTML);
 }

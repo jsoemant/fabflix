@@ -15,11 +15,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+// Declaring a WebServlet called SingleMovieServlet, which maps to url "/api/single-movie"
 @WebServlet(name = "SingleMovieServlet", urlPatterns = "/api/single-movie")
 public class SingleMovieServlet extends HttpServlet {
-    private static final long serialVersionUID = 3L;
-
-    // Create a dataSource which registered in web.xml
     private DataSource dataSource;
 
     public void init(ServletConfig config) {
@@ -36,129 +34,107 @@ public class SingleMovieServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.setContentType("application/json"); // Response mime type
-
-        // Retrieve parameter id from url request.
-        String requestId = request.getParameter("id");
-
-        // Output stream to STDOUT
+        response.setContentType("application/json");
+        String id = request.getParameter("id");
         PrintWriter out = response.getWriter();
 
-        // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
-            // Get a connection from dataSource
+            // Preparing and Executing Genre Query
+            String genreQuery = "SELECT G.id, G.name\n" +
+                    "FROM movies M, genres G, genres_in_movies GiM\n" +
+                    "WHERE M.id = ? AND GiM.movieId = ? AND GiM.genreId = G.id\n" +
+                    "ORDER BY G.name ASC";
+            PreparedStatement statement1 = conn.prepareStatement(genreQuery);
+            statement1.setString(1, id);
+            statement1.setString(2, id);
+            ResultSet rs1 = statement1.executeQuery();
 
-            // Construct a query with parameter represented by "?"
-            String query = "WITH MR AS (SELECT *\n" +
-                    "\t\t\tFROM movies M LEFT OUTER JOIN ratings R on M.id = R.movieId)\n" +
-                    "\n" +
-                    "SELECT \n" +
-                    "\tMR.id,\n" +
-                    "    MR.title,\n" +
-                    "    MR.year,\n" +
-                    "    MR.director,\n" +
-                    "    (SELECT \n" +
-                    "            GROUP_CONCAT(sub_query.name)\n" +
-                    "        FROM\n" +
-                    "            (SELECT \n" +
-                    "                G.name\n" +
-                    "            FROM\n" +
-                    "                genres G, genres_in_movies GM, movies TM\n" +
-                    "            WHERE\n" +
-                    "                TM.id = MR.id AND MR.id = GM.movieId\n" +
-                    "                    AND GM.genreId = G.id) AS sub_query) AS genres,\n" +
-                    "    (SELECT \n" +
-                    "            GROUP_CONCAT(sub_query.name)\n" +
-                    "        FROM\n" +
-                    "            (SELECT \n" +
-                    "                S.name\n" +
-                    "            FROM\n" +
-                    "                stars S, stars_in_movies SM, movies TM\n" +
-                    "            WHERE\n" +
-                    "                TM.id = MR.id AND MR.id = SM.movieId\n" +
-                    "                    AND SM.starId = S.id) AS sub_query) AS stars,\n" +
-                    "\t(SELECT \n" +
-                    "            GROUP_CONCAT(sub_query.id)\n" +
-                    "        FROM\n" +
-                    "            (SELECT \n" +
-                    "                S.id\n" +
-                    "            FROM\n" +
-                    "                stars S, stars_in_movies SM, movies TM\n" +
-                    "            WHERE\n" +
-                    "                TM.id = MR.id AND MR.id = SM.movieId\n" +
-                    "                    AND SM.starId = S.id) AS sub_query) AS stars_id,\n" +
-                    "\tIFNULL(MR.rating, 'N/A') as rating\n" +
-                    "FROM\n" +
-                    "\tMR\n" +
-                    "WHERE\n" +
-                    "    MR.id = " + "?";
+            // Preparing and Executing Movie Query
+            String movieQuery = "SELECT M.title, M.year, M.director, " +
+                    "IFNULL(R.rating, 'N/A') as rating\n" +
+                    "FROM movies M LEFT OUTER JOIN ratings R ON M.id = R.movieId\n" +
+                    "WHERE M.id = ?";
+            PreparedStatement statement3 = conn.prepareStatement(movieQuery);
+            statement3.setString(1, id);
+            ResultSet rs3 = statement3.executeQuery();
 
-            // Declare our statement
-            PreparedStatement statement = conn.prepareStatement(query);
-
-            // Set the parameter represented by "?" in the query to the id we get from url,
-            // num 1 indicates the first "?" in the query
-            statement.setString(1, requestId);
-
-            // Perform the query
-            ResultSet rs = statement.executeQuery();
-
+            // Creating jsonArray to return
             JsonArray jsonArray = new JsonArray();
 
-            while(rs.next()) {
-                String id = rs.getString("id");
-                String title = rs.getString("title");
-                String year = rs.getString("year");
-                String director = rs.getString("director");
-                String genres = rs.getString("genres");
-                JsonArray starsArray = new JsonArray();
-                String[] stars = rs.getString("stars").split(",");
-                for (String star: stars){
-                    starsArray.add(star);
-                }
-                JsonArray starsIdArray = new JsonArray();
-                String[] starsId = rs.getString("stars_id").split(",");
-                for (String starId: starsId){
-                    starsIdArray.add(starId);
-                }
-                String rating = rs.getString("rating");
+            // Create jsonObject for return
+            JsonObject jsonObject = new JsonObject();
 
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("id", id);
+            // Parsing and handling genre Data
+            JsonArray genresArray = new JsonArray();
+            while (rs1.next()) {
+                JsonObject tmp = new JsonObject();
+                String genreId = rs1.getString("id");
+                String genreName = rs1.getString("name");
+                tmp.addProperty("id", genreId);
+                tmp.addProperty("name", genreName);
+                genresArray.add(tmp);
+            }
+            jsonObject.add("genres", genresArray);
+            rs1.close();
+            statement1.close();
+
+
+            // Parsing and handling Movie Data
+            while (rs3.next()) {
+                String title = rs3.getString("title");
+                String year = rs3.getString("year");
+                String director = rs3.getString("director");
+                String rating = rs3.getString("rating");
                 jsonObject.addProperty("title", title);
                 jsonObject.addProperty("year", year);
                 jsonObject.addProperty("director", director);
-                jsonObject.addProperty("genres", genres);
                 jsonObject.addProperty("rating", rating);
-                jsonObject.add("stars", starsArray);
-                jsonObject.add("stars_id", starsIdArray);
+                jsonObject.addProperty("id", id);
+            }
+            rs3.close();
+            statement3.close();
 
-                jsonArray.add(jsonObject);
+            // Order by star
+            String starQuery = "SELECT S.id, S.name,\n" +
+                    "   (SELECT COUNT(*) as numPlayed\n" +
+                    "       FROM stars_in_movies SiM\n" +
+                    "       WHERE SiM.starId = S.id\n" +
+                    "    ) as numMovies\n" +
+                    "FROM movies M, stars S, stars_in_movies SiM\n" +
+                    "WHERE M.id = ? AND SiM.movieId = ? AND SiM.starId = S.id\n" +
+                    "ORDER BY numMovies DESC, S.name ASC\n";
+            PreparedStatement starStatement = conn.prepareStatement(starQuery);
+            starStatement.setString(1, id);
+            starStatement.setString(2, id);
+            ResultSet starSet = starStatement.executeQuery();
+
+            // Parse star data
+            JsonArray starsArray = new JsonArray();
+            while (starSet.next()) {
+                JsonObject tmp = new JsonObject();
+                String starId = starSet.getString("id");
+                String starName = starSet.getString("name");
+                tmp.addProperty("id", starId);
+                tmp.addProperty("name", starName);
+                starsArray.add(tmp);
             }
 
-            rs.close();
-            statement.close();
+            // Add star data
+            jsonObject.add("stars", starsArray);
+            starSet.close();
+            starStatement.close();
 
-            // write JSON string to output
+            // Modify and Return jsonArray
+            jsonArray.add(jsonObject);
             out.write(jsonArray.toString());
-            // set response status to 200 (OK)
             response.setStatus(200);
-
         } catch (Exception e) {
-            // write error message JSON object to output
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("errorMessage", e.getMessage());
             out.write(jsonObject.toString());
-
-            // set response status to 500 (Internal Server Error)
             response.setStatus(500);
         } finally {
             out.close();
         }
-
-        // always remember to close db connection after usage. Here it's done by try-with-resources
-
-
     }
-
 }

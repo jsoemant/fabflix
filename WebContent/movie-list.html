@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Movie List</title>
+    </head>
+    <body>
+        <a href="index.html">Back To Search</a>
+        <br><br>
+        <a href="cart.html">Checkout</a>
+        <h1>Movie List</h1>
+
+
+        <form id="limit_form" method="get" action="#">
+            <label>Results Per Page</label>
+            <select name="limit" id="limit">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <input type="submit" value="Submit"/>
+        </form>
+        <div id="limit_form_message"></div>
+
+        <form id="order_form" method="get" action="#">
+            <label>Results Per Page</label>
+            <select name="order" id="order">
+                <option value="TITLEASCRATINGASC">Title ASC, Rating ASC</option>
+                <option value="TITLEASCRATINGDESC">Title ASC, Rating DESC</option>
+                <option value="TITLEDESCRATINGASC">Title DESC, Rating ASC</option>
+                <option value="TITLEDESCRATINGDESC">Title DESC, Rating DESC</option>
+                <option value="RATINGASCTITLEASC">Rating ASC, Title ASC</option>
+                <option value="RATINGASCTITLEDESC">Rating ASC, Title DESC</option>
+                <option value="RATINGDESCTITLEASC">Rating DESC, Title ASC</option>
+                <option value="RATINGDESCTITLEDESC">Rating DESC, Title DESC</option>
+            </select>
+            <input type="submit" value="Submit"/>
+        </form>
+        <div id="order_form_message"></div>
+
+        <table border=1px>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Director</th>
+                    <th>Genres</th>
+                    <th>Stars</th>
+                    <th>Rating</th>
+                    <th>Add to cart</th>
+                </tr>
+            </thead>
+            <tbody id=movie_list_table_body></tbody>
+        </table>
+        <div id="page_count_message"></div>
+        <div id="page_button"></div>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Load your own JS script -->
+        <script src="movie-list.js"></script>
+        <script src="movie-list-buttons.js"></script>
+
+    </body>
+</html>

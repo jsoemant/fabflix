@@ -1,6 +1,5 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
@@ -14,11 +13,10 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
-
-@WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
-public class PaymentServlet extends HttpServlet {
-
+@WebServlet(name = "GenreServlet", urlPatterns = "/api/genre")
+public class GenreServlet extends HttpServlet {
     // Create a dataSource which registered in web.xml
     private DataSource dataSource;
 
@@ -30,13 +28,12 @@ public class PaymentServlet extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json"); // Response mime type
-        String number = request.getParameter("number");
-        String date = request.getParameter("date");
-        String first = request.getParameter("first");
-        String last = request.getParameter("last");
 
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
@@ -44,48 +41,46 @@ public class PaymentServlet extends HttpServlet {
         // Get a connection from dataSource and let resource manager close the connection after usage.
         try (Connection conn = dataSource.getConnection()) {
 
-            String query= "SELECT *\n" +
-                    "FROM creditcards CC\n" +
-                    "WHERE CC.id = ? AND CC.firstName = ? AND CC.lastName = ? and CC.expiration = ?";
+            // Declare our statement
+            Statement statement = conn.createStatement();
 
-            PreparedStatement ccStatement = conn.prepareStatement(query);
-            ccStatement.setString(1, number);
-            ccStatement.setString(2, first);
-            ccStatement.setString(3, last);
-            ccStatement.setString(4, date);
-            ResultSet rs = ccStatement.executeQuery();
+            String query = "SELECT *\n" +
+                    "FROM genres G\n";
 
-            JsonObject responseJsonObject = new JsonObject();
+            // Perform the query
+            ResultSet rs = statement.executeQuery(query);
 
-            // Credit card auth fail
-            if (!rs.isBeforeFirst()) {
-                responseJsonObject.addProperty("status", "fail");
-                responseJsonObject.addProperty("message", "credit card information is incorrect");
-            } else {
-                //  credit card auth succeed
-                JsonArray sales = new JsonArray();
-                while (rs.next()) {
-                    // set this user into the session
-                    responseJsonObject.addProperty("status", "success");
-                    responseJsonObject.addProperty("message", "success");
-                }
+            JsonArray dataArray = new JsonArray();
+
+            // Iterate through each row of rs
+            while (rs.next()) {
+                // Parse movie data
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+
+                // Create a JsonObject based on the data we retrieve from rs
+                JsonObject jsonObject = new JsonObject();
+
+                // Add movie data
+                jsonObject.addProperty("id", id);
+                jsonObject.addProperty("name", name);
+
+                // Add movie Object
+                dataArray.add(jsonObject);
             }
 
             rs.close();
-            ccStatement.close();
+            statement.close();
 
             // write JSON string to output
-            out.write(responseJsonObject.toString());
+            out.write(dataArray.toString());
             // set response status to 200 (OK)
             response.setStatus(200);
-
 
         } catch (Exception e) {
 
             // write error message JSON object to output
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("status", "fail");
-            jsonObject.addProperty("message", "credit card information is incorrect");
             jsonObject.addProperty("errorMessage", e.getMessage());
             out.write(jsonObject.toString());
 
@@ -97,4 +92,7 @@ public class PaymentServlet extends HttpServlet {
         // always remember to close db connection after usage. Here it's done by try-with-resources
 
     }
+
+
+
 }

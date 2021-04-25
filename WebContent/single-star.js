@@ -15,19 +15,21 @@ function getParameterByName(target) {
 }
 
 function handleSingleStar(resultData) {
-    let singleStarInfoElement = jQuery("#single_star_info");
-    singleStarInfoElement.append(resultData[0]["name"]);
-
     let singleStarTable = jQuery("#single_star_table_body");
+
+    let star = resultData[0];
     let rowHTML = "";
     rowHTML += "<tr>";
-    rowHTML += "<td>" + resultData[0]["birthYear"] + "</td>";
+
+    rowHTML += "<td>" + star["name"] + "</td>";
+    rowHTML += "<td>" + star["birthYear"] + "</td>";
+
     let sep = "";
     rowHTML += "<td>";
-    for (let j = 0; j < resultData[0]["movies"].length; j++) {
+    for (let j = 0; j < star["movies"].length; j++) {
         rowHTML +=
-            sep + "<a href=\"single-movie.html?id=" + resultData[0]["moviesId"][j] + "\">" +
-            resultData[0]["movies"][j] + "</a>";
+            sep + "<a href=\"single-movie.html?id=" + star["movies"][j]["id"] + "\">" +
+            star["movies"][j]["title"] + "</a>";
         sep = ", ";
     }
     rowHTML += "</td>";
