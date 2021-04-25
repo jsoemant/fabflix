@@ -1,5 +1,4 @@
 function handleDelete(id) {
-
     $.ajax({
         url: "api/index?addId=" + id,
         method: "DELETE",
@@ -11,7 +10,6 @@ function handleDelete(id) {
 
 function handleClick(event) {
     let PARAMETERS = {};
-
     if (event["target"]["name"] === "plus") {
          PARAMETERS = {
             "addId": event["target"]["id"],
@@ -23,9 +21,7 @@ function handleClick(event) {
             "addQty": -1,
         }
     }
-
-    $.ajax(
-        "api/index", {
+    $.ajax("api/index", {
             method: "POST",
             data: $.param(PARAMETERS),
             success: () => {
@@ -39,7 +35,6 @@ function handleClick(event) {
 function handleResult(data) {
     let table = $("#shopping-cart-display");
     let cartInfo = data[0]["shoppingCart"];
-
     if (cartInfo.length === 0) {
         table.append("No items in cart, cannot proceed to payment!");
         return;

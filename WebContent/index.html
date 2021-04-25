@@ -1,31 +1,58 @@
+<!-- This page will be seen if you logged in -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <title>Movie List Page</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home Page</title>
+    </head>
+    <body>
+        <h1>Home Page</h1>
+        <a href="cart.html" > Checkout</a>
 
-<h1>Movie List Page</h1>
+        <h3>Search</h3>
+        <form id="search_form" method="get" action="#">
+            <label>
+                Title
+                <input type="text" name="title"/>
+            </label>
+            <label>
+                Year
+                <input type="number" min="0" name="year"/>
+            </label>
+            <label>
+                Director
+                <input type="text" name="director"/>
+            </label>
+            <label>
+                Star
+                <input type="text" name="star"/>
+            </label>
+            <input type="submit" value="Submit"/>
+        </form>
 
-<table id=movie_list_table>
-    <caption>Top 20 Movies</caption>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Year</th>
-            <th>Director</th>
-            <th>Genres</th>
-            <th>Stars</th>
-            <th>Rating</th>
-        </tr>
-    </thead>
-    <tbody id=movie_list_table_body></tbody>
-</table>
+        <div id="search_error_message"></div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="index.js"></script>
+        <h3>Browse By Genre</h3>
+        <form id="genre_form" method="get" action="#">
+            <label>Choose a genre</label>
+            <select name="genre" id="genre"></select>
+            <input type="submit" value="Submit"/>
+        </form>
 
-</body>
+        <h3>Browse By Title</h3>
+        <form id="title_form" method="get" action="#">
+            <label>Choose a title prefix</label>
+            <select name="title" id="title"></select>
+            <input type="submit" value="Submit"/>
+        </form>
+
+
+        <!-- jQuery -->
+        <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+
+        <!-- Include our own JS file -->
+        <script src='index.js'></script>
+        <script src='search.js'></script>
+        <script src='browse.js'></script>
+    </body>
 </html>
