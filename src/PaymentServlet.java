@@ -8,17 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @WebServlet(name = "PaymentServlet", urlPatterns = "/api/payment")
 public class PaymentServlet extends HttpServlet {
@@ -52,15 +48,12 @@ public class PaymentServlet extends HttpServlet {
                     "FROM creditcards CC\n" +
                     "WHERE CC.id = ? AND CC.firstName = ? AND CC.lastName = ? and CC.expiration = ?";
 
-
             PreparedStatement ccStatement = conn.prepareStatement(query);
             ccStatement.setString(1, number);
             ccStatement.setString(2, first);
             ccStatement.setString(3, last);
             ccStatement.setString(4, date);
             ResultSet rs = ccStatement.executeQuery();
-
-            String currentTime = LocalDate.now().toString();
 
             JsonObject responseJsonObject = new JsonObject();
 
@@ -70,40 +63,12 @@ public class PaymentServlet extends HttpServlet {
                 responseJsonObject.addProperty("message", "credit card information is incorrect");
             } else {
                 //  credit card auth succeed
+                JsonArray sales = new JsonArray();
                 while (rs.next()) {
                     // set this user into the session
-
                     responseJsonObject.addProperty("status", "success");
                     responseJsonObject.addProperty("message", "success");
-
-                    HttpSession session = request.getSession();
-                    HashMap<String, HashMap<String, String>> shoppingCart = (HashMap<String, HashMap<String, String>>) session.getAttribute("shoppingCart");
-
-                    String id = (String) session.getAttribute("id");
-
-                    String insertQuery= "INSERT INTO sales\n" +
-                            "VALUES (NULL, ?, ?, ?)\n";
-
-                    PreparedStatement updateStatement = conn.prepareStatement(insertQuery);
-
-                    for (Map.Entry entry : shoppingCart.entrySet()) {
-                        String key = (String) entry.getKey();
-                        HashMap<String, String> value = (HashMap<String, String>) entry.getValue();
-
-                        String qty = value.get("qty");
-
-                        for (int i=0; i<Integer.parseInt(qty); i++) {
-
-                            updateStatement.setString(1, id);
-                            updateStatement.setString(2, key);
-                            updateStatement.setString(3, currentTime);
-                            updateStatement.executeUpdate();
-
-                        }
-                    }
-
                 }
-
             }
 
             rs.close();
