@@ -66,8 +66,12 @@ public class MovieListServlet extends HttpServlet {
         if (!isNullEmpty(title)) {
             if (title.equals("*")) {
                 whereClause += whereSep + "REGEXP_LIKE(M.title, '^[^a-zA-Z0-9]')";
-            } else {
+            }
+            else if (title.length() == 1){
                 whereClause += whereSep + "M.title LIKE '" + title + "%'";
+            }
+            else {
+                whereClause += whereSep + "M.title LIKE '%" + title + "%'";
             }
             whereSep = " AND ";
         }
@@ -166,7 +170,7 @@ public class MovieListServlet extends HttpServlet {
         response.setContentType("application/json"); // Response mime type
 
         buildQuery(request);
-        
+        System.out.println(requestQuery);
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
 
