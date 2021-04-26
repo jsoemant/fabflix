@@ -30,6 +30,7 @@ function handleClick(event) {
             data: $.param(PARAMETERS)
         }
     );
+    alert("You have successfully added a movie to your cart!");
 }
 function handleGenreChange(id) {
     const PARAMETERS = [
