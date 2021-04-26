@@ -38,7 +38,10 @@ title_form.submit(submitForm);
 genre_form.submit(submitForm);
 
 function addGenre(res) {
-    let row ="";
+    let row =" <option selected disabled>Genre</option>";
+    // for(let i=0; i<res.length; i++) {
+    //     row += "<option value=" + res[i]["id"] + " >" + res[i]["name"] + "</option>";
+    // }
     for(let i=0; i<res.length; i++) {
         row += "<option value=" + res[i]["id"] + " >" + res[i]["name"] + "</option>";
     }

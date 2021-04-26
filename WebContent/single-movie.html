@@ -1,13 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class = "theme-black" lang="en">
     <head>
+        <meta name = "theme-color" content = "#1f1f1f">
+        <link rel="stylesheet" href="styles1.css">
         <meta charset="UTF-8">
         <title>Single Movie</title>
     </head>
     <body>
-        <a href="movie-list.html">Back To Movies List</a>
-        <br><br>
-        <a href="cart.html" > Checkout</a>
+    <nav role="navigation">
+        <a class="logo" href="index.html">
+            <img src= "logo.svg" alt="logo" width = "46"height = "30"></a>
+        <!--    <h1>Home Page</h1>-->
+        <!--        <h3>Browse By Genre</h3>-->
+        <div class="collapse">
+            <ul class="menu left">
+                <li class="desktop">
+                    <a href="cart.html" > Checkout</a>
+                </li>
+                <li class = "desktop">
+                    <a href="index.html">Back to search</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
         <h1>Single Movie Page</h1>
 
         <table border=1px>

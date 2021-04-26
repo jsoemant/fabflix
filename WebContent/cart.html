@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class = "theme-black" lang="en">
 <head>
+    <meta name = "theme-color" content = "#1f1f1f">
+    <link rel="stylesheet" href="styles1.css">
     <meta charset="UTF-8">
     <title>Shopping Cart Page</title>
     </head>
     <body>
-        <a href="index.html">Back to search</a>
+    <nav role="navigation">
+        <a class="logo" href="index.html">
+            <img src= "logo.svg" alt="logo" width = "46"height = "30"></a>
+        <!--    <h1>Home Page</h1>-->
+        <!--        <h3>Browse By Genre</h3>-->
+        <div class="collapse">
+            <ul class="menu left">
+                <li class="desktop">
+                    <a href="cart.html" > Checkout</a>
+                </li>
+                <li class = "desktop">
+                    <a href="index.html">Back to search</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
         <h1>Shopping Cart Page</h1>
         <div id="shopping-cart-display"></div>

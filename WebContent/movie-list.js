@@ -70,27 +70,33 @@ function handleAddToCart(event) {
             data: $.param(PARAMETERS)
         }
     );
+    alert("You have successfully added a movie to your cart!");
 }
 
 function displayResult(resultData) {
 
-
-    let movieListTableBodyElement = jQuery("#movie_list_table_body");
+    let table = $("#movie-list-display");
+    // let movieListTableBodyElement = jQuery("#movie_list_table_body");
 
     let movies = resultData["data"];
-
+    let counter = 0;
+    let rowHTML = "";
     for (let i = 0; i < movies.length; i++) {
-        let rowHTML = "";
-        rowHTML += "<tr>";
+        if (counter === 0){
+            rowHTML += "<div class=\"row\">";
+        }
+        counter += 1;
+        rowHTML += "<div class=\"column\">\n" +
+            "    <div class=\"card\">";
         rowHTML +=
-            "<td>" +
+            "<h1>" +
             "<a href=\"single-movie.html?id=" + movies[i]["movie_id"] + "\">" +
             movies[i]["movie_title"] + "</a>" +
-            "</td>";
-        rowHTML += "<td>" + movies[i]["movie_year"] + "</td>";
-        rowHTML += "<td>" + movies[i]["movie_director"] + "</td>";
+            "</h1>";
+        rowHTML += "<h3>" + "Year: " + movies[i]["movie_year"] + "</h3>";
+        rowHTML += "<h3>" + "Directed by " +  movies[i]["movie_director"] + "</h3>";
 
-        rowHTML += "<td>";
+        rowHTML += "<h3>";
         let sep = "";
         for (let j = 0; j < movies[i]["genres"].length; j++) {
             rowHTML +=
@@ -102,31 +108,38 @@ function displayResult(resultData) {
                 movies[i]["genres"][j]["name"] + "</a>";
             sep = ", ";
         }
-        rowHTML += "</td>";
+        rowHTML += "</h3>";
 
-        rowHTML += "<td>";
+        rowHTML += "<h3>";
         sep = "";
+        rowHTML += "Stars: ";
         for (let j = 0; j < movies[i]["stars"].length; j++) {
             rowHTML +=
                 sep + "<a href=\"single-star.html?id=" + movies[i]["stars"][j]["id"] + "\">" +
                 movies[i]["stars"][j]["name"] + "</a>";
             sep = ", ";
         }
-        rowHTML += "</td>";
+        rowHTML += "</h3>";
 
-        rowHTML += "<td>" + (movies[i]["movie_rating"] ? movies[i]["movie_rating"] : "N/A") + "</td>";
+        rowHTML += "<h3>" + "Rating: " + (movies[i]["movie_rating"] ? movies[i]["movie_rating"] : "N/A") + "</h3>";
 
-        rowHTML += "<td>";
+        rowHTML += "<h3>";
         rowHTML += "<button id=" +
             movies[i]["movie_id"] +
             " name=\"" + movies[i]["movie_title"] + "\"" +
             " onClick=handleAddToCart(event)>+" +
             "</button>"
-        rowHTML += "</td>";
+        rowHTML += "</h3>";
 
-        rowHTML += "</tr>";
-        movieListTableBodyElement.append(rowHTML);
+        rowHTML += "</div>\n" +
+            "  </div>";
+        if (counter === 4 || i === movies.length - 1){
+            console.log(counter);
+            rowHTML += "</div><br>";
+            counter = 0;
+        }
     }
+    table.append(rowHTML);
 
 
     rowHTML = "";

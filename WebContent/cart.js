@@ -70,7 +70,9 @@ function handleResult(data) {
     rowHTML += "        </tbody>\n" +
         "    </table>";
 
-    rowHTML += "<a href=\"payment.html\" >Proceed to payment</a>";
+    rowHTML += "<form action=\"payment.html\">\n" +
+        "    <input type=\"submit\" value=\"Proceed to Payment\" />\n" +
+        "</form>";
 
     table.append(rowHTML);
 }

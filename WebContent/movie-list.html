@@ -1,14 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class = "theme-black" lang="en">
     <head>
+        <meta name = "theme-color" content = "#1f1f1f">
+        <link rel="stylesheet" href="styles1.css">
         <meta charset="UTF-8">
         <title>Movie List</title>
     </head>
     <body>
-        <a href="index.html">Back To Search</a>
-        <br><br>
-        <a href="cart.html">Checkout</a>
-        <h1>Movie List</h1>
+    <nav role="navigation">
+        <a class="logo" href="index.html">
+            <img src= "logo.svg" alt="logo" width = "46"height = "30"></a>
+        <!--    <h1>Home Page</h1>-->
+        <!--        <h3>Browse By Genre</h3>-->
+        <div class="collapse">
+            <ul class="menu left">
+                <li class="desktop">
+                    <a href="cart.html" > Checkout</a>
+                </li>
+                <li class = "desktop">
+                    <a href="index.html">Back to search</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
 
         <form id="limit_form" method="get" action="#">
@@ -39,20 +53,21 @@
         </form>
         <div id="order_form_message"></div>
 
-        <table border=1px>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>Director</th>
-                    <th>Genres</th>
-                    <th>Stars</th>
-                    <th>Rating</th>
-                    <th>Add to cart</th>
-                </tr>
-            </thead>
-            <tbody id=movie_list_table_body></tbody>
-        </table>
+<!--        <table border=1px>-->
+<!--            <thead>-->
+<!--                <tr>-->
+<!--                    <th>Title</th>-->
+<!--                    <th>Year</th>-->
+<!--                    <th>Director</th>-->
+<!--                    <th>Genres</th>-->
+<!--                    <th>Stars</th>-->
+<!--                    <th>Rating</th>-->
+<!--                    <th>Add to cart</th>-->
+<!--                </tr>-->
+<!--            </thead>-->
+<!--            <tbody id=movie_list_table_body></tbody>-->
+<!--        </table>-->
+        <div id="movie-list-display"></div>
         <div id="page_count_message"></div>
         <div id="page_button"></div>
 

@@ -1,29 +1,37 @@
 <!-- This page will be redirected from any url if you are not logged in -->
 <!DOCTYPE html>
-<html lang="en">
+<html class = "theme-black" lang="en">
     <head>
+        <meta name = "theme-color" content = "#1f1f1f">
+        <link rel="stylesheet" href="styles1.css">
         <meta charset="UTF-8">
         <title>Login to Fablix</title>
     </head>
+
     <body>
-        <h2>Login to Fablix</h2>
+    <div id="content">
+    <br><br><br><br><br><br>
+    <a class="logo" href="index.html">
+        <img src= "logo.svg" alt="logo" height = "80"></a>
+        <p class="lead">Abandon all hope, ye who enter here
+        <br>ここから入らんとする者は一切の希望を放棄せよ </p>
         <!-- Set the method to POST to avoid showing the username/password in the URL
              The default action is disabled to allow your own implementation. -->
         <form id="login_form" method="post" action="#">
-            <label><b>Username</b></label>
-            <label>
-                <input name="username" type="text">
-            </label>
-            <br>
-            <label><b>Password</b></label>
-            <label>
-                <input name="password" type="password">
-            </label>
+            <div class="inputs">
+                <div class = "row">
+                    <input id = "username" name = "username" placeholder="username (or email)" type="text">
+                </div>
+                <div class = "row">
+                    <input id = "password" name = "password" placeholder="password" type="password">
+                </div>
+            </div>
             <br>
             <input type="submit" value="Login">
         </form>
 
         <div id="login_error_message"></div>
+    </div>
 
         <!-- include jQuery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
