@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Checkout Page</title>
+    </head>
+    <body>
+        <!-- Links -->
+        <a href="index.html">Back to Search</a>
+        <a href="shopping-cart.html">Shopping Cart</a>
+
+        <h1>Payment Page</h1>
+
+        <div id="total-message"></div>
+
+        <h3>Payment Information</h3>
+        <form id="payment-form">
+            <label>
+                First Name
+                <input type="text" name="first"/>
+            </label>
+            <label>
+                Last Name
+                <input type="text" name="last"/>
+            </label>
+            <label>
+                Credit Card Number
+                <input type="text" name="number"/>
+            </label>
+            <label>
+                Expiration Date
+                <input type="text" name="date"/>
+            </label>
+            <input type="submit" value="Submit"/>
+        </form>
+
+        <div id="payment-message"></div>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- JS -->
+        <script src="checkout.js"></script>
+    </body>
+</html>
