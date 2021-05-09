@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+
+    <table border=1px>
+        <caption>Database Metadata</caption>
+        <thead>
+        <tr>
+            <td>Table name</td>
+            <td>Attributes</td>
+        </tr>
+        </thead>
+        <tbody id="metadata-table-body"></tbody>
+    </table>
+
+    <br>
+
+    <h3>Add star</h3>
+    <form id="star-form">
+        <label>
+            Name
+            <input type="text" name="name" required/>
+        </label><br>
+        <label>
+            Birth Year
+            <input type="number" min="0" name="birthYear"/>
+        </label><br>
+        <input type="submit" value="Submit"/>
+    </form>
+    <br>
+
+    <h3>Add Movie</h3>
+    <form id="movie-form">
+        <label>
+            Movie Title
+            <input type="text" name="title" required/>
+        </label><br>
+        <label>
+            Movie Year
+            <input type="number" min="0" name="year" required/>
+        </label><br>
+        <label>
+            Movie Director
+            <input type="text" name="director" required/>
+        </label><br>
+        <label>
+            Star Name
+            <input type="text" min="0" name="star" required/>
+        </label><br>
+        <label>
+            Star Birth Year
+            <input type="number" min="0" name="birthYear"/>
+        </label><br>
+        <label>
+            Genre
+            <input type="text" name="genre" required/>
+        </label><br>
+        <input type="submit" value="Submit"/>
+    </form>
+    <br>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="dashboard.js"></script>
+
+</body>
+</html>
