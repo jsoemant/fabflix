@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Movie List</title>
+    </head>
+    <body>
+        <!-- Links -->
+        <a href="index.html">Back to Search</a>
+        <a href="shopping-cart.html">Shopping Cart</a>
+
+        <!-- Limit -->
+        <h3 id="limit-message">Results Per Page</h3>
+        <select id="limit-form" onchange="handleChange(this.id, this.value)">
+            <option value="" selected hidden disabled>Select Limit</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+
+        <!-- Order -->
+        <h3 id="order-message">Order By</h3>
+        <select id="order-form" onchange="handleChange(this.id, this.value)">
+            <option value="" selected hidden disabled>Select Order</option>
+            <option value="TITLEASCRATINGASC">Title ASC, Rating ASC</option>
+            <option value="TITLEASCRATINGDESC">Title ASC, Rating DESC</option>
+            <option value="TITLEDESCRATINGASC">Title DESC, Rating ASC</option>
+            <option value="TITLEDESCRATINGDESC">Title DESC, Rating DESC</option>
+            <option value="RATINGASCTITLEASC">Rating ASC, Title ASC</option>
+            <option value="RATINGASCTITLEDESC">Rating ASC, Title DESC</option>
+            <option value="RATINGDESCTITLEASC">Rating DESC, Title ASC</option>
+            <option value="RATINGDESCTITLEDESC">Rating DESC, Title DESC</option>
+        </select>
+
+        <!-- Movie List -->
+        <h3>Movie List</h3>
+        <div id="movie-list"></div>
+        <br>
+
+        <!-- Pagination -->
+        <div id="page-message"></div>
+        <div id="page-button"></div>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- JS -->
+        <script src="movie-list.js"></script>
+    </body>
+</html>
