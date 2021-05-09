@@ -1,0 +1,52 @@
+<!-- This page will be seen if you logged in -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Fablix</title>
+    </head>
+    <body>
+        <h1>Welcome to Fabflix</h1>
+
+        <a href="shopping-cart.html">Shopping Cart</a>
+
+        <!-- Search -->
+        <h3>Search</h3>
+        <form id="search-form">
+            <label>
+                Title
+                <input type="text" name="title"/>
+            </label>
+            <label>
+                Year
+                <input type="number" min="0" name="year"/>
+            </label>
+            <label>
+                Director
+                <input type="text" name="director"/>
+            </label>
+            <label>
+                Star
+                <input type="text" name="star"/>
+            </label>
+            <input type="submit" value="Submit"/>
+        </form>
+        <div id="search-message"></div>
+        <br>
+
+        <!-- Browse By Genre -->
+        <h3>Browse By Genre</h3>
+        <select id='genre-form' onchange='handleOnChange(this.id, this.value)'></select>
+        <br>
+
+        <!-- Browse By Title -->
+        <h3>Browse By Title</h3>
+        <select id='title-form'onchange='handleOnChange(this.id, this.value)'></select>
+
+        <!-- jQuery -->
+        <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+
+        <!-- JS -->
+        <script type='text/javascript' src='index.js'></script>
+    </body>
+</html>
