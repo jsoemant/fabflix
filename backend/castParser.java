@@ -24,6 +24,7 @@ public class castParser extends DefaultHandler {
     // DB CACHE
     // DB CONNECTION
     private Connection connection;
+    private boolean add;
 
 
     public castParser() throws Exception {
@@ -64,7 +65,7 @@ public class castParser extends DefaultHandler {
         starIDSet.close();
 
         // MOVIES
-        String movieQuery = "SELECT * FROM movies M GROUP BY M.title";
+        String movieQuery = "SELECT * FROM movies M";
         ResultSet movieSet = statement.executeQuery(movieQuery);
         while (movieSet.next()) {
             String movieTitle = movieSet.getString("title");
@@ -194,6 +195,7 @@ public class castParser extends DefaultHandler {
         //reset
         tempVal = "";
         if (qName.equalsIgnoreCase("m")) {
+            add = true;
             tempStarMovie = new StarMovie();
         }
     }
@@ -205,14 +207,38 @@ public class castParser extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equalsIgnoreCase("m")) {
             //add it to the list
-            tempStarMovie.setDirector(tempDirector);
-            parsedStarMovie.add(tempStarMovie);
+            if (tempVal.strip().isEmpty() || tempVal == null){
+                System.out.println("Inconsistency: 'm' field has en empty value.");
+                add = false;
+            }
+            if (add) {
+                tempStarMovie.setDirector(tempDirector);
+                parsedStarMovie.add(tempStarMovie);
+            }
         } else if (qName.equalsIgnoreCase("t")) {
-            tempStarMovie.setMovie(tempVal);
+            if (tempVal.strip().isEmpty() || tempVal == null){
+                System.out.println("Inconsistency: 't' field has en empty value.");
+                add = false;
+            }
+            else {
+                tempStarMovie.setMovie(tempVal);
+            }
         } else if (qName.equals("is")) {
-            tempDirector = tempVal;
+            if (tempVal.strip().isEmpty() || tempVal == null){
+                System.out.println("Inconsistency: 'is' field has en empty value.");
+                add = false;
+            }
+            else {
+                tempDirector = tempVal;
+            }
         } else if (qName.equals("a")) {
-            tempStarMovie.setStar(tempVal);
+            if (tempVal.strip().isEmpty() || tempVal == null){
+                System.out.println("Inconsistency: 'a' field has en empty value.");
+                add = false;
+            }
+            else {
+                tempStarMovie.setStar(tempVal);
+            }
         }
     }
 
