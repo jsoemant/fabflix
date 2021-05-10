@@ -107,7 +107,7 @@ public class movieParser extends DefaultHandler {
         parseDocument(movieDocument);
         insertMovies();
         long end = System.currentTimeMillis();
-        System.out.println("Time in Seconds for Movie Parser: " + 1.9832);
+        System.out.println("Time in Seconds for Movie Parser: " + (end - start)/1000.0);
     }
 
     private void parseDocument(String document) {

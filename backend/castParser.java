@@ -106,7 +106,7 @@ public class castParser extends DefaultHandler {
         insertActors();
         long end = System.currentTimeMillis();
 //        System.out.println("Time in Seconds for Cast Parser: " + ((end - start) / 1000.0));
-        System.out.println("Time in Seconds for Cast Parser: " + 101.5734);
+        System.out.println("Time in Seconds for Cast Parser: " + (end - start)/1000.0);
     }
 
     private void parseDocument(String document) {
