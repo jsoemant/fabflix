@@ -112,7 +112,7 @@ public class PaymentServlet extends HttpServlet {
                 for (Map.Entry item : cart.entrySet()) {
                     String movieId = (String) item.getKey();
                     HashMap<String, String> value = (HashMap<String, String>) item.getValue();
-                    String qty = value.get("quantity");
+                    String qty = value.get("qty");
 
                     insertStatement.setString(1, id);
                     insertStatement.setString(2, movieId);

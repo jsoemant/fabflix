@@ -49,7 +49,7 @@ public class OrderServlet extends HttpServlet {
 
             JsonArray sales = new JsonArray();
 
-            String query = "SELECT S.id, M.title, S.saleDate, S.qty, S.orderId\n" +
+            String query = "SELECT S.id, M.title, S.saleDate, S.quantity, S.orderId\n" +
                     "FROM sales S, movies M\n" +
                     "WHERE S.orderId = ? AND S.movieId = M.id";
 
@@ -62,7 +62,7 @@ public class OrderServlet extends HttpServlet {
                 String saleId = rs.getString("id");
                 String title = rs.getString("title");
                 String saleDate = rs.getString("saleDate");
-                String qty = rs.getString("qty");
+                String qty = rs.getString("quantity");
 
                 tmp.addProperty("saleId", saleId);
                 tmp.addProperty("title", title);
