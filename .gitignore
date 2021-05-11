@@ -155,7 +155,6 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 
 *.dtd
-*.xml
 sql/movie-data.sql
 
 
