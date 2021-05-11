@@ -26,10 +26,15 @@
 (UPDATE HERE)
  
 ### Parsing Optimization Strategies
-(UPDATE HERE)
+
+Batch Inserting: Batch statements will help save internet and connection cost versus executing each statement separately, and they will also be executed concurrently which can also improve speed.
+
+HaspMap: Minimizes the amount of queries and searches that need to be done and searches become O(1) time. 
 
 ### Inconsisdent Data Report
-(UPDATE HERE)
+https://github.com/UCI-Chenli-teaching/cs122b-spring21-team-91/blob/main/actor.txt  
+https://github.com/UCI-Chenli-teaching/cs122b-spring21-team-91/blob/main/cast.txt  
+https://github.com/UCI-Chenli-teaching/cs122b-spring21-team-91/blob/main/main.txt  
 
 ### Contributions
 
