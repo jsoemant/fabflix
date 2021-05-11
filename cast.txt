@@ -1,3 +1,6 @@
+Inconsistency: 'a' field has en empty value.
+Inconsistency: 'a' field has en empty value.
+Inconsistency: 'a' field has en empty value.
 Error: movies(name: Masquerade, director: Dearden) does not exist in DB.
 Error: movies(name: Love Streams, director: Cassavetes) does not exist in DB.
 Error: movies(name: Love Streams, director: Cassavetes) does not exist in DB.
