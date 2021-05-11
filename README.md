@@ -55,5 +55,5 @@ https://github.com/UCI-Chenli-teaching/cs122b-spring21-team-91/blob/main/main.tx
 
 ### Contributions
 
-Josh: Updated and fixed back-end servlets, created employee enpoints/dashboard, updated front-end.
+Josh: Updated and fixed back-end servlets, created employee enpoints/dashboard, updated front-end.  
 Kevin: Created XML parsers, created SQL stored procedure, updated front-end.     
