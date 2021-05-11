@@ -45,7 +45,7 @@ Movies: 1.9832
 
 Unoptimized Times:  
 Actor: 101.5734  
-Cast: 102.3122 
+Cast: 102.3122   
 Movies: 101.8921  
 
 ### Inconsistent Data Report
