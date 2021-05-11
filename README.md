@@ -29,11 +29,11 @@
 
 Batch Inserting: Batch statements will help save internet and connection cost versus executing each statement separately, and they will also be executed concurrently which can also improve speed.  
 HashMap: Minimizes the amount of queries and searches that need to be done and searches become O(1) time.  
-Unoptimized Times:  
+**Unoptimized Times:  **
 Actor: 1.847  
 Cast:   
 Movies: 1.9832  
-Optimized Times:  
+**Optimized Times:  **
 Actor: 101.5734  
 Cast:  
 Movies: 101.8921  
