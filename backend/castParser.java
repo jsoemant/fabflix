@@ -65,7 +65,7 @@ public class castParser extends DefaultHandler {
         starIDSet.close();
 
         // MOVIES
-        String movieQuery = "SELECT * FROM movies M";
+        String movieQuery = "SELECT * FROM movies M GROUP BY M.title";
         ResultSet movieSet = statement.executeQuery(movieQuery);
         while (movieSet.next()) {
             String movieTitle = movieSet.getString("title");
@@ -207,10 +207,6 @@ public class castParser extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equalsIgnoreCase("m")) {
             //add it to the list
-            if (tempVal.strip().isEmpty() || tempVal == null){
-                System.out.println("Inconsistency: 'm' field has en empty value.");
-                add = false;
-            }
             if (add) {
                 tempStarMovie.setDirector(tempDirector);
                 parsedStarMovie.add(tempStarMovie);
