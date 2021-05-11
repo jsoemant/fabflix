@@ -45,7 +45,7 @@ BEGIN
         -- GENRE
         IF (genre_count = 0) THEN
 			INSERT INTO genres VALUES(null, genre);
-			set genre_id = (SELECT max(id) from genres) + 1;
+			set genre_id = (SELECT max(id) from genres);
 			SET result = CONCAT(result, ', genre added with id ');
             SET result = CONCAT(result, genre_id);
         ELSE
