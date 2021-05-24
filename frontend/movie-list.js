@@ -98,11 +98,16 @@ function handleMovieResult(resultData) {
         let params = "&limit=10&offset=0&order=TITLEASCRATINGASC";
         rowHTML += "<td>";
         let sep = "";
-        for (let j = 0; j < movies[i]["genres"].length; j++) {
-            rowHTML +=
-                sep + "<a href=\"movie-list.html?genre=" + movies[i]["genres"][j]["id"] + params + "\">" +
-                movies[i]["genres"][j]["name"] + "</a>";
-            sep = ", ";
+        if (movies[i]["genres"].length === 0) {
+            rowHTML += "N/A";
+        }
+        else {
+            for (let j = 0; j < movies[i]["genres"].length; j++) {
+                rowHTML +=
+                    sep + "<a href=\"movie-list.html?genre=" + movies[i]["genres"][j]["id"] + params + "\">" +
+                    movies[i]["genres"][j]["name"] + "</a>";
+                sep = ", ";
+            }
         }
         rowHTML += "</td>";
 

@@ -60,12 +60,22 @@ public class MovieListServlet extends HttpServlet {
         String fromSep = ", ";
         String whereSep = "";
 
+//        if (!isNullEmpty(title)) {
+//            if (title.equals("*")) {
+//                whereClause += whereSep + "REGEXP_LIKE(M.title, '^[^a-zA-Z0-9]')";
+//            }
+//            else {
+//                whereClause += whereSep + "M.title LIKE ?";
+//            }
+//            whereSep = " AND ";
+//        }
+
         if (!isNullEmpty(title)) {
             if (title.equals("*")) {
                 whereClause += whereSep + "REGEXP_LIKE(M.title, '^[^a-zA-Z0-9]')";
             }
             else {
-                whereClause += whereSep + "M.title LIKE ?";
+                whereClause += whereSep + "MATCH (M.title) AGAINST (? in BOOLEAN MODE)";
             }
             whereSep = " AND ";
         }
@@ -172,19 +182,28 @@ public class MovieListServlet extends HttpServlet {
         buildQuery(request);
         PrintWriter out = response.getWriter();
 
+        String nTitle = "";
+        String[] sTitle = title.split(" ");
+        String ad = "+";
+        for (String i: sTitle){
+            nTitle += ad + i + "*";
+            ad = " +";
+        }
+
         try (Connection conn = dataSource.getConnection()) {
             PreparedStatement statement = conn.prepareStatement(requestQuery);
             int count = 1;
 
-            System.out.println(requestQuery);
+//            System.out.println(requestQuery);
 
             if (!isNullEmpty(title)) {
                 if (!title.equals("*") && title.length() == 1 ) {
                     statement.setString(count++, title + '%');
                 } else if (title.length() > 1) {
-                    statement.setString(count++, '%' + title + '%');
+                    statement.setString(count++, nTitle);
                 }
             }
+            System.out.println(statement);
             if (!isNullEmpty(year)) {
                 statement.setInt(count++, Integer.parseInt(year));
             }
@@ -203,7 +222,7 @@ public class MovieListServlet extends HttpServlet {
             if (!isNullEmpty(offset)) {
                 statement.setInt(count++, Integer.parseInt(offset));
             }
-
+            System.out.println(statement);
 
             ResultSet rs = statement.executeQuery();
             JsonObject returnObject = new JsonObject();
@@ -292,13 +311,21 @@ public class MovieListServlet extends HttpServlet {
             PreparedStatement countStatement = conn.prepareStatement(countQuery);
             count = 1;
 
+//            if (!isNullEmpty(title)) {
+//                if (!title.equals("*") && title.length() == 1 ) {
+//                    countStatement.setString(count++, title + '%');
+//                } else if (title.length() > 1) {
+//                    countStatement.setString(count++, '%' + title + '%');
+//                }
+//            }
             if (!isNullEmpty(title)) {
                 if (!title.equals("*") && title.length() == 1 ) {
                     countStatement.setString(count++, title + '%');
                 } else if (title.length() > 1) {
-                    countStatement.setString(count++, '%' + title + '%');
+                    countStatement.setString(count++, nTitle);
                 }
             }
+
             if (!isNullEmpty(year)) {
                 countStatement.setInt(count++, Integer.parseInt(year));
             }

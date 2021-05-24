@@ -41,22 +41,30 @@ public class LoginServlet extends HttpServlet {
 
         JsonObject jsonObject = new JsonObject();
 
+        boolean captchaExists = true;
+
+        if (gRecaptchaResponse == null){
+            captchaExists = false;
+        }
         // Verify reCAPTCHA
-        try {
-            RecaptchaVerifyUtils.verify(gRecaptchaResponse);
-        } catch (Exception e) {
-            jsonObject.addProperty("status", "fail");
-            jsonObject.addProperty("message", "captcha is not completed");
-            out.write(jsonObject.toString());
-            response.setStatus(200);
-            out.close();
-            return;
+        if (captchaExists) {
+            try {
+                RecaptchaVerifyUtils.verify(gRecaptchaResponse);
+            } catch (Exception e) {
+                jsonObject.addProperty("status", "fail");
+                jsonObject.addProperty("message", "captcha is not completed");
+                out.write(jsonObject.toString());
+                response.setStatus(200);
+                out.close();
+                return;
+            }
         }
 
         try (Connection conn = dataSource.getConnection()) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String role = request.getParameter("role");
+            role = "customer";
 
             System.out.println(password);
 
@@ -92,9 +100,11 @@ public class LoginServlet extends HttpServlet {
                             request.getSession().setAttribute("user", new User(username));
                             jsonObject.addProperty("type", "employee");
                         }
+                        System.out.println("success here");
                         jsonObject.addProperty("status", "success");
                         jsonObject.addProperty("message", "login information is correct");
                     } else {
+                        System.out.println("failing here");
                         jsonObject.addProperty("status", "fail");
                         jsonObject.addProperty("message", "login information is incorrect");
                     }

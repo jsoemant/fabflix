@@ -3,6 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="style.css">
         <title>Fablix</title>
     </head>
     <body>
@@ -10,8 +11,17 @@
 
         <a href="shopping-cart.html">Shopping Cart</a>
 
+        <!-- Browse By Genre -->
+        <h3>Browse By Genre</h3>
+        <select id='genre-form' onchange='handleOnChange(this.id, this.value)'></select>
+        <br>
+
+        <!-- Browse By Title -->
+        <h3>Browse By Title</h3>
+        <select id='title-form'onchange='handleOnChange(this.id, this.value)'></select>
+
         <!-- Search -->
-        <h3>Search</h3>
+        <h3>Advanced Search</h3>
         <form id="search-form">
             <label>
                 Title
@@ -34,19 +44,24 @@
         <div id="search-message"></div>
         <br>
 
-        <!-- Browse By Genre -->
-        <h3>Browse By Genre</h3>
-        <select id='genre-form' onchange='handleOnChange(this.id, this.value)'></select>
+        <!-- Search -->
+        <h3>Main Search</h3>
+        <form id="full-form">
+            <label>
+                Title
+                <input name="title" id="autocomplete" type="text" class="autocomplete" placeholder="Search Movie"/>
+            </label>
+            <input type="submit" value="Submit"/>
+        </form>
+        <div id="full-message"></div>
         <br>
-
-        <!-- Browse By Title -->
-        <h3>Browse By Title</h3>
-        <select id='title-form'onchange='handleOnChange(this.id, this.value)'></select>
 
         <!-- jQuery -->
         <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.7/jquery.autocomplete.min.js"></script>
 
         <!-- JS -->
-        <script type='text/javascript' src='index.js'></script>
+        <script type='text/javascript' src='filter.js'></script>
+        <script src="autocomplete.js"></script>
     </body>
 </html>
