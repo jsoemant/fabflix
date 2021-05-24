@@ -27,7 +27,7 @@ public class ListViewActivity extends Activity {
     int offset;
     int max;
     String id;
-    private final String host = "18.116.60.164";
+    private final String host = "18.216.3.125";
     private final String port = "8443";
     private final String domain = "fabflix";
     private final String baseURL = "https://" + host + ":" + port + "/" + domain;
