@@ -10,7 +10,7 @@
  *
  */
 
-
+var dict = {}
 /*
  * This function is called by the library when it needs to lookup a query.
  *
@@ -22,9 +22,9 @@ function handleLookup(query, doneCallback) {
     console.log("autocomplete initiated")
 
     // TODO: if you want to check past query results first, you can do it here
-    if (localStorage.getItem(query) != null){
+    if (query in dict){
         console.log("already used query, fetching from cache")
-        doneCallback({suggestions: localStorage.getItem(query)})
+        doneCallback({suggestions: dict[query]})
     }
     else {
         // sending the HTTP GET request to the Java Servlet endpoint hero-suggestion
@@ -57,7 +57,7 @@ function handleLookup(query, doneCallback) {
  */
 function handleLookupAjaxSuccess(data, query, doneCallback) {
     // TODO: if you want to cache the result into a global variable you can do it here
-    localStorage.setItem(query, data);
+    dict[query] = data;
 
     // call the callback function provided by the autocomplete library
     // add "{suggestions: jsonData}" to satisfy the library response format according to
