@@ -24,5 +24,5 @@ https://youtu.be/76abu0Hc8eY
  
 ### Contributions
 
-Josh: Did the android list view, search page, and single page view. 
+Josh: Did the android list view, search page, and single page view.   
 Kevin: Did autocomplete servlet and js, fixed sql queries, updated style.css, fixed login and recaptcha.   
