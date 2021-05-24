@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS movies(
     title VARCHAR(100) NOT NULL,
     year INTEGER NOT NULL,
     director VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FULLTEXT (title)
 );
 
 CREATE TABLE IF NOT EXISTS stars(
