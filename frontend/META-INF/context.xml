@@ -11,7 +11,7 @@
               type="javax.sql.DataSource"
               username="mytestuser"
               password="My6$Password"
-              url="jdbc:mysql://localhost:3306/moviedb?autoReconnect=true&amp;sslMode=DISABLED"/>
+              url="jdbc:mysql://localhost:3306/moviedb?autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true"/>
     <Resource name="jdbc/moviedb-master"
               auth="Container"
               driverClassName="com.mysql.jdbc.Driver"
@@ -20,5 +20,5 @@
               type="javax.sql.DataSource"
               username="mytestuser"
               password="My6$Password"
-              url="jdbc:mysql://172.31.33.45:3306/moviedb?autoReconnect=true&amp;sslMode=DISABLED"/>
+              url="jdbc:mysql://172.31.33.45:3306/moviedb?autoReconnect=true&amp;useSSL=false&amp;cachePrepStmts=true"/>
 </Context>

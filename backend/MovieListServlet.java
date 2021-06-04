@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.io.FileWriter;
 
 
 // Declaring a WebServlet called MovieListServlet, which maps to url "/api/movie-list"
@@ -24,6 +25,11 @@ public class MovieListServlet extends HttpServlet {
     private String countQuery;
     private int currentIndex;
     private int currentLength;
+    long startTime;
+    long startTime2;
+    long totalTime;
+    long totalTime2;
+
 
     public void init(ServletConfig config) {
         try {
@@ -168,6 +174,7 @@ public class MovieListServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        startTime = System.nanoTime();
         response.setContentType("application/json");
 
         // Retrieve parameter id from url request.
@@ -223,8 +230,9 @@ public class MovieListServlet extends HttpServlet {
                 statement.setInt(count++, Integer.parseInt(offset));
             }
             System.out.println(statement);
-
+            startTime2 = System.nanoTime();
             ResultSet rs = statement.executeQuery();
+            totalTime2 = System.nanoTime() - startTime2;
             JsonObject returnObject = new JsonObject();
             JsonArray dataArray = new JsonArray();
 
@@ -370,6 +378,17 @@ public class MovieListServlet extends HttpServlet {
             // set response status to 500 (Internal Server Error)
             response.setStatus(500);
         } finally {
+            totalTime = System.nanoTime() - startTime;
+            System.out.println("hellojsdfkljdslkfj");
+            System.out.println(request.getServletContext().getRealPath("/") + "log.txt");
+            try {
+                FileWriter myWriter = new FileWriter("/home/ubuntu/log.txt", true);
+                myWriter.write(totalTime + " | " + totalTime2 + "\n");
+                myWriter.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
             out.close();
         }
         // always remember to close db connection after usage. Here it's done by try-with-resources
