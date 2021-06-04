@@ -36,10 +36,10 @@
 
 | **Single-instance Version Test Plan**          | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
-| Case 1: HTTP/1 thread                          | [Link](../main/img/Single%201%20Connection.png) | 117                        | ??                                  | ??                        | ??           |
-| Case 2: HTTP/10 threads                        | [Link](../main/img/Single%2010%20Connection.png) | 104                        | ??                                  | ??                        | ??           |
-| Case 3: HTTPS/10 threads                       | [Link](../main/img/Single%2010%20Connection%20HTTPS.png) | 108                        | ??                                  | ??                        | ??           |
-| Case 4: HTTP/10 threads/No connection pooling  | [Link](../main/img/Single%2010%20No%20Connection.png) | 101                        | ??                                  | ??                        | ??           |
+| Case 1: HTTP/1 thread                          | [Link](../main/img/Single%201%20Connection.png) | 117                        | 4.977911427737227                 | 1.736589580048662      | ??           |
+| Case 2: HTTP/10 threads                        | [Link](../main/img/Single%2010%20Connection.png) | 104                        | 4.692718472901679                  | 2.3235306906474817    | ??           |
+| Case 3: HTTPS/10 threads                       | [Link](../main/img/Single%2010%20Connection%20HTTPS.png) | 108                        | 5.00735108714703             | 1.7783851392405063    | ??           |
+| Case 4: HTTP/10 threads/No connection pooling  | [Link](../main/img/Single%2010%20No%20Connection.png) | 101                        | 4.038158662983426                  | 1.0775938172191528          | ??           |
 
 | **Scaled Version Test Plan**                   | **Graph Results Screenshot** | **Average Query Time(ms)** | **Average Search Servlet Time(ms)** | **Average JDBC Time(ms)** | **Analysis** |
 |------------------------------------------------|------------------------------|----------------------------|-------------------------------------|---------------------------|--------------|
