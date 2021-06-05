@@ -16,7 +16,10 @@
 
 - # Connection Pooling
     - #### Include the filename/path of all code/configuration files in GitHub of using JDBC Connection Pooling.
-    (context.xml)
+    [context.xml](../main/frontend/META-INF/context.xml)
+    [AddMovieServlet.java](../main/backend/AddMovieServlet.java)
+    [AddStarServlet.java](../main/backend/AddStarServlet.java)
+    [OrderServlet.java](../main/backend/OrderServlet.java)
     - #### Explain how Connection Pooling is utilized in the Fabflix code.
      Connection pooling is a method used with databases to perform searches faster. In Fabflix instead of having to create a new connection every time, we can use existing connections from our pool of pre-existing connections which allows us to skip extra steps and thus perform searches much quicker. 
     - #### Explain how Connection Pooling works with two backend SQL.
