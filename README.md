@@ -7,7 +7,8 @@
     
     - #### Project 5 Video Demo Link: https://youtu.be/29R6YXdnWyQ
 
-    - #### Instruction of deployment: Run the project on local and deploy the war file on tomcat manager on the AWS server
+    - #### Instruction of deployment: 
+    Run the project on local and deploy the war file on tomcat manager on the AWS server
 
     - #### Collaborations and Work Distribution: 
     - Josh: Scaled Fablix with cluster of MySQL/Tomcat with load balancer, measured performance using JMeter.  
