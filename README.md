@@ -16,10 +16,9 @@
 
 - # Connection Pooling
     - #### Include the filename/path of all code/configuration files in GitHub of using JDBC Connection Pooling.
-    [context.xml](../main/frontend/META-INF/context.xml)
-    [AddMovieServlet.java](../main/backend/AddMovieServlet.java)
-    [AddStarServlet.java](../main/backend/AddStarServlet.java)
-    [OrderServlet.java](../main/backend/OrderServlet.java)
+    [context.xml](../main/frontend/META-INF/context.xml)  
+    [AddMovieServlet.java](../main/backend/AddMovieServlet.java)  
+    [AddStarServlet.java](../main/backend/AddStarServlet.java)   
     - #### Explain how Connection Pooling is utilized in the Fabflix code.
      Connection pooling is a method used with databases to perform searches faster. In Fabflix instead of having to create a new connection every time, we can use existing connections from our pool of pre-existing connections which allows us to skip extra steps and thus perform searches much quicker. 
     - #### Explain how Connection Pooling works with two backend SQL.
@@ -27,7 +26,10 @@
 
 - # Master/Slave
     - #### Include the filename/path of all code/configuration files in GitHub of routing queries to Master/Slave SQL.
-    (context.xml)
+    [context.xml](../main/frontend/META-INF/context.xml)  
+    [AddMovieServlet.java](../main/backend/AddMovieServlet.java)  
+    [AddStarServlet.java](../main/backend/AddStarServlet.java)  
+    [OrderServlet.java](../main/backend/OrderServlet.java)  
     - #### How read/write requests were routed to Master/Slave SQL?
     We added an extra resource on our context.xml specifically for our master db, so that everytime we would like to perform a write it will only be routed there, but for reads it will have the option for either the master or the slave.
 
