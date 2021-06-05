@@ -5,7 +5,7 @@
     
     - #### Names: Josh Soemanto, Kevin Tran
     
-    - #### Project 5 Video Demo Link: https://youtu.be/BK6Q7EKl194
+    - #### Project 5 Video Demo Link: https://youtu.be/29R6YXdnWyQ
 
     - #### Instruction of deployment: Run the project on local and deploy the war file on tomcat manager on the AWS server
 
