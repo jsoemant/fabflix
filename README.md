@@ -15,4 +15,4 @@ The application was originally hosted on a sole AWS EC2 instance. When putting s
 
 - This application has a transactions system that allows users to select and purchase different movies. Upon checkout, users are presented a form where they can input payment information that will be verified against a predefined set of fake credit cards.
 
-- This application also has a simple android application written in Java to serve as an alternative frontend on any android device. The application communicates with the original backend server with HTTPS connections through our developed API routes. Sessions are maintained by the CookieHandler and CookieManager functions set in the NetworkManager class.
+- This application also has a simple Android application written in Java to serve as an alternative front-end on any Android device. The application communicates with the original backend server with HTTPS connections through our developed API routes. Sessions are maintained by the CookieHandler and CookieManager functions set in the NetworkManager class.
